@@ -33,8 +33,8 @@ public class ActivitySimulator {
 
     public static void main(String[] args) {
         // Define as datas de início e fim para a geração de commits.
-        LocalDate startDate = LocalDate.of(2025, 5, 1);
-        LocalDate endDate = LocalDate.of(2025, 6, 2);
+        LocalDate startDate = LocalDate.of(2025, 6, 1);
+        LocalDate endDate = LocalDate.of(2025, 6, 4);
 
         // Inicializa o repositório Git se ele ainda não existir.
         initializeRepository();
