@@ -5502,3 +5502,4 @@ Commit 1 for PR on branch fix/pr-866-fix-login-bug
 Commit 2 for PR on branch fix/pr-866-fix-login-bug
 Commit 3 for PR on branch fix/pr-866-fix-login-bug
 Commit 4 for PR on branch fix/pr-866-fix-login-bug
+Commit 1 for PR on branch fix/pr-263-add-user-auth
