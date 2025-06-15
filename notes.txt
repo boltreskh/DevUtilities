@@ -5521,3 +5521,4 @@ Commit 1 for PR on branch feature/pr-802-update-api-docs
 Commit 2 for PR on branch feature/pr-802-update-api-docs
 Commit 3 for PR on branch feature/pr-802-update-api-docs
 Commit 1 for PR on branch fix/pr-258-fix-login-bug
+Commit 2 for PR on branch fix/pr-258-fix-login-bug
