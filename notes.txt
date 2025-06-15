@@ -5495,3 +5495,4 @@ Commit 1 for PR on branch fix/pr-149-fix-login-bug
 Commit 2 for PR on branch fix/pr-149-fix-login-bug
 Commit 1 for PR on branch fix/pr-972-refactor-database-module
 Commit 2 for PR on branch fix/pr-972-refactor-database-module
+Commit 3 for PR on branch fix/pr-972-refactor-database-module
