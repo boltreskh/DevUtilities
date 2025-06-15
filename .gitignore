@@ -1,0 +1,22 @@
+# Ignore Java compilation files
+*.class
+*.jar
+
+# Ignore logs
+*.log
+
+# Ignore IDE files
+.idea/
+.classpath
+.project
+.settings/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore any specific temporary files
+*.tmp
+
+# Ignore local configuration files
+config/github.properties
