@@ -4680,3 +4680,4 @@ Commit 4 for PR on branch feature/pr-225-fix-login-bug
 Commit 1 for PR on branch feature/pr-690-update-api-docs
 Commit 2 for PR on branch feature/pr-690-update-api-docs
 Commit 1 for PR on branch feature/pr-783-refactor-database-module
+Commit 2 for PR on branch feature/pr-783-refactor-database-module
