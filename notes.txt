@@ -5497,3 +5497,4 @@ Commit 1 for PR on branch fix/pr-972-refactor-database-module
 Commit 2 for PR on branch fix/pr-972-refactor-database-module
 Commit 3 for PR on branch fix/pr-972-refactor-database-module
 Commit 1 for PR on branch feature/pr-437-update-api-docs
+Commit 2 for PR on branch feature/pr-437-update-api-docs
