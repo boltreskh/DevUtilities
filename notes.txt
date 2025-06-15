@@ -5492,3 +5492,4 @@ Commit 3 for PR on branch fix/pr-381-fix-login-bug
 Commit 4 for PR on branch fix/pr-381-fix-login-bug
 Commit 4 for PR on branch feature/pr-738-fix-login-bug
 Commit 1 for PR on branch fix/pr-486-refactor-database-module
+Commit 2 for PR on branch fix/pr-486-refactor-database-module
