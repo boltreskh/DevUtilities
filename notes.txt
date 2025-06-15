@@ -5497,3 +5497,4 @@ Commit 3 for PR on branch fix/pr-859-update-api-docs
 Commit 4 for PR on branch fix/pr-859-update-api-docs
 Commit 1 for PR on branch feature/pr-100-add-user-auth
 Commit 2 for PR on branch feature/pr-100-add-user-auth
+Commit 3 for PR on branch feature/pr-100-add-user-auth
