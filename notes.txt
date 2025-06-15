@@ -4640,3 +4640,4 @@ Commit 1 for PR on branch feature/pr-635-fix-login-bug
 Commit 2 for PR on branch feature/pr-635-fix-login-bug
 Commit 3 for PR on branch feature/pr-635-fix-login-bug
 Commit 1 for PR on branch feature/pr-759-refactor-database-module
+Commit 2 for PR on branch feature/pr-759-refactor-database-module
