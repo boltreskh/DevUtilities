@@ -5502,3 +5502,4 @@ Commit 1 for PR on branch fix/pr-493-update-api-docs
 Commit 2 for PR on branch fix/pr-493-update-api-docs
 Commit 3 for PR on branch fix/pr-493-update-api-docs
 Commit 1 for PR on branch fix/pr-480-add-user-auth
+Commit 2 for PR on branch fix/pr-480-add-user-auth
