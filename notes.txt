@@ -5505,3 +5505,4 @@ Commit 1 for PR on branch feature/pr-704-fix-login-bug
 Commit 2 for PR on branch feature/pr-704-fix-login-bug
 Commit 3 for PR on branch feature/pr-704-fix-login-bug
 Commit 1 for PR on branch fix/pr-918-add-user-auth
+Commit 2 for PR on branch fix/pr-918-add-user-auth
