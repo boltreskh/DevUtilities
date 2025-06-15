@@ -51,7 +51,7 @@ public class ActivitySimulator extends JFrame {
 
     private JLabel logLabel;
     private JLabel languageLabel;
-    private JButton btnCommits, btnIssue, btnPR, btnComment, btnMerge, btnApprove, btnRelease;
+    private JButton btnCommits, btnIssue, btnPR, btnComment, btnMerge, btnApprove, btnRelease, btnCloseIssue;
     private TitledBorder createSectionBorder, interactSectionBorder, manageSectionBorder;
 
     private static final Random RANDOM = new Random();
@@ -64,6 +64,7 @@ public class ActivitySimulator extends JFrame {
     private static final String[] MERGE_MESSAGES = {"Good work! Merging now.", "Merged. Thanks for the contribution!", "Feature integrated successfully."};
     private static final String[] APPROVE_COMMENTS = {"Looks good to me!", "Great work, approved.", "LGTM!"};
     private static final String[] RELEASE_NOTES = {"This version includes performance improvements and bug fixes.", "New API features and database query optimization.", "Maintenance release with security updates."};
+    private static final String[] CLOSE_MESSAGES = {"Resolved in commit xyz.", "Fixed.", "Closing as this is now implemented."};
 
     private static final Color COLOR_BACKGROUND = new Color(30, 31, 34);
     private static final Color COLOR_PANEL = new Color(43, 43, 43);
@@ -88,12 +89,36 @@ public class ActivitySimulator extends JFrame {
         setContentPane(mainPanel);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        
+        // Inicializa o painel de log PRIMEIRO para evitar NullPointerException
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
+        gbc.gridy = 2; // Será a terceira linha no layout
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        
+        JPanel logPanel = new JPanel(new BorderLayout(0, 5));
+        logPanel.setOpaque(false);
+        logLabel = new JLabel();
+        logLabel.setForeground(Color.WHITE);
+        logLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
+        logPanel.add(logLabel, BorderLayout.NORTH);
 
+        logArea = new JTextPane();
+        logArea.setEditable(false);
+        logArea.setFont(new Font("Consolas", Font.PLAIN, 13));
+        logArea.setBackground(new Color(30, 30, 30));
+        logArea.setMargin(new Insets(10, 10, 10, 10));
+        JScrollPane scrollPane = new JScrollPane(logArea);
+        scrollPane.setBorder(new LineBorder(COLOR_BORDER));
+        logPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        mainPanel.add(logPanel, gbc);
+
+        // Agora inicializa o resto da UI que pode usar o log
+        gbc.gridy = 0;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setOpaque(false);
         
@@ -121,9 +146,7 @@ public class ActivitySimulator extends JFrame {
         topPanel.add(langPanel, BorderLayout.EAST);
         mainPanel.add(topPanel, gbc);
 
-        gbc.gridy++;
-        gbc.weighty = 0.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridy = 1;
         
         JPanel actionsContainerPanel = new JPanel();
         actionsContainerPanel.setLayout(new BoxLayout(actionsContainerPanel, BoxLayout.Y_AXIS));
@@ -137,34 +160,13 @@ public class ActivitySimulator extends JFrame {
         btnComment = createStyledButton("", "icons/comment.png");
         btnApprove = createStyledButton("", "icons/approve.png");
         btnMerge = createStyledButton("", "icons/merge.png");
-        actionsContainerPanel.add(createSectionPanel("section.interact", btnComment, btnApprove, btnMerge));
+        btnCloseIssue = createStyledButton("", "icons/close.png");
+        actionsContainerPanel.add(createSectionPanel("section.interact", btnComment, btnApprove, btnMerge, btnCloseIssue));
         
         btnRelease = createStyledButton("", "icons/release.png");
         actionsContainerPanel.add(createSectionPanel("section.manage", btnRelease));
         mainPanel.add(actionsContainerPanel, gbc);
 
-        gbc.gridy++;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        JPanel logPanel = new JPanel(new BorderLayout(0, 5));
-        logPanel.setOpaque(false);
-        logLabel = new JLabel();
-        logLabel.setForeground(Color.WHITE);
-        logLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
-        logPanel.add(logLabel, BorderLayout.NORTH);
-
-        logArea = new JTextPane();
-        logArea.setEditable(false);
-        logArea.setFont(new Font("Consolas", Font.PLAIN, 13));
-        logArea.setBackground(new Color(30, 30, 30));
-        logArea.setMargin(new Insets(10, 10, 10, 10));
-        JScrollPane scrollPane = new JScrollPane(logArea);
-        scrollPane.setBorder(new LineBorder(COLOR_BORDER));
-        logPanel.add(scrollPane, BorderLayout.CENTER);
-        
-        mainPanel.add(logPanel, gbc);
-        
         updateUIText(); 
 
         btnCommits.addActionListener(e -> showCommitDateDialog());
@@ -174,6 +176,7 @@ public class ActivitySimulator extends JFrame {
         btnMerge.addActionListener(e -> runTask(this::simulateMergePullRequest));
         btnApprove.addActionListener(e -> runTask(this::simulateApprovePullRequest));
         btnRelease.addActionListener(e -> runTask(this::simulateCreateRelease));
+        btnCloseIssue.addActionListener(e -> runTask(this::simulateCloseIssueWorkflow));
 
         runTask(() -> {
             try {
@@ -239,6 +242,8 @@ public class ActivitySimulator extends JFrame {
         setButtonText(btnMerge, messages.getString("button.merge_pr"));
         setButtonText(btnApprove, messages.getString("button.approve_pr"));
         setButtonText(btnRelease, messages.getString("button.create_release"));
+        setButtonText(btnCloseIssue, messages.getString("button.close_issue"));
+
 
         languageLabel.setText(messages.getString("lang.selector"));
 
@@ -360,6 +365,10 @@ public class ActivitySimulator extends JFrame {
     }
     
     private void appendMessageToLog(String message, LogLevel level) {
+        if (logArea == null) {
+            System.out.println("LOG (pre-init): " + message);
+            return;
+        }
         StyledDocument doc = logArea.getStyledDocument();
         Color textColor = switch (level) {
             case SUCCESS -> COLOR_TEXT_SUCCESS;
@@ -564,6 +573,31 @@ public class ActivitySimulator extends JFrame {
              throw new RuntimeException(e);
         }
     }
+    
+    private void simulateCloseIssueWorkflow() {
+        log("log.close_issue.looking", LogLevel.INFO);
+        try {
+            GHRepository repo = getRepository();
+            List<GHIssue> openIssues = repo.getIssues(GHIssueState.OPEN);
+
+            if (openIssues.isEmpty()) {
+                log("log.close_issue.none_found", LogLevel.ERROR);
+                return;
+            }
+
+            GHIssue randomIssue = openIssues.get(RANDOM.nextInt(openIssues.size()));
+            String closeComment = CLOSE_MESSAGES[RANDOM.nextInt(CLOSE_MESSAGES.length)];
+
+            log("log.close_issue.closing", LogLevel.INFO, randomIssue.getNumber(), closeComment);
+            randomIssue.comment(closeComment);
+            randomIssue.close();
+            log("log.close_issue.success", LogLevel.SUCCESS, randomIssue.getNumber());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private void showCommitDateDialog() {
         JTextField startDateField = new JTextField(LocalDate.now().minusYears(1).format(DateTimeFormatter.ISO_LOCAL_DATE), 10);
