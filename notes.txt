@@ -4694,3 +4694,4 @@ Commit 1 for PR on branch fix/pr-317-fix-login-bug
 Commit 2 for PR on branch fix/pr-317-fix-login-bug
 Commit 3 for PR on branch fix/pr-317-fix-login-bug
 Commit 1 for PR on branch fix/pr-988-refactor-database-module
+Commit 2 for PR on branch fix/pr-988-refactor-database-module
