@@ -5535,3 +5535,4 @@ Commit 4 for PR on branch feature/pr-128-fix-login-bug
 Commit 1 for PR on branch fix/pr-709-fix-login-bug
 Commit 2 for PR on branch fix/pr-709-fix-login-bug
 Commit 1 for PR on branch feature/pr-387-refactor-database-module
+Commit 2 for PR on branch feature/pr-387-refactor-database-module
